@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des destinations de voyages{% endblock %}
+
+{% block body %}
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-dismissible alert-{{ type }}">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <p class="mb-0">{{ message }}</p>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <h1>Liste des destinations</h1>
+    {% for destination in destinations %}
+        <div class="card bg-light mb-3" style="max-width: 20rem;">
+            <h2 class="card-header"><a href="{{ path('app_destination_show', {"id": destination.id})}}">{{ destination.country }}</a></h2>
+            <div class="card-body">
+                <p class="card-text">{{ destination.description | slice(0, 60) }} ...</p>
+            </div>
+            {% if app.user %}
+                <div class="card-footer text-end"><a href="{{ path('app_mylist_add', {id: destination.id}) }}">➕</a></div>
+            {% endif %}  
+        </div>
+    {% endfor %}
+
+{% endblock %}

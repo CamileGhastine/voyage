@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma liste de destinations de voyages{% endblock %}
+
+{% block body %}  
+    <h1>Ma liste de destinations</h1>
+    {% for wish in wishes %}
+        <div class="card bg-light mb-3" style="max-width: 20rem;">
+            <h2 class="card-header"><a href="{{ path('app_destination_show', {"id": wish.destination.id})}}">{{ wish.destination.country }}</a></h2>
+            <div class="card-body">
+                <p class="card-text">{{ wish.destination.description | slice(0, 60) }} ...</p>
+            </div>
+            <div class="card-footer text-end"><a href="{{ path('app_mylist_remove', {id: wish.id}) }}">➖</a></div>                        
+        </div>
+    {% endfor %}
+    
+    {% if wishes.count == 0 %}
+        <p>Aucun pays à votre liste de voyage.</p>
+    {% endif %}
+{% endblock %}

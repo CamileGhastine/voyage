@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ destination.country}} {% endblock %}
+
+{% block body %}
+    <div class="card mb-3">
+        <h1 class="card-header">{{ destination.country}}</h1>
+        <img src="{{ destination.imageUrl}}" alt="{{ destination.country}}">
+        <div class="card-body">
+            <p class="card-text">{{ destination.description}}</p>
+        </div>
+    </div>
+{% endblock %}
