@@ -27,6 +27,11 @@ final class MyListController extends AbstractController
     #[Route('/mylist/add/{id}', name: 'app_mylist_add')]
     public function add(Destination $destination, EntityManagerInterface $manager): Response
     {
+        if (!$this->getUser() || !$destination) {
+            $this->addFlash('warning', 'Vous ne pouvez pas accéder à cette page sans être connecté.');
+
+            return $this->redirectToRoute('app_login');
+        }
         if($this->getUser()->hasWish($destination)) {
             $this->addFlash('warning', 'Cette desitination est déjà dans votre liste de voyage.');
 
@@ -43,14 +48,44 @@ final class MyListController extends AbstractController
         $manager->persist($wish);
         $manager->flush();
 
+        $this->addFlash('success', 'La destination a été ajoutée à votre liste avec succès.');
+
         return $this->redirectToRoute('app_mylist_index');
     }
 
     #[Route('/mylist/remove/{id}', name: 'app_mylist_remove')]
     public function remove(Wish $wish, EntityManagerInterface $manager): Response
     {
+        if (!$this->getUser() || $this->getUser()->getWishes()->contains($wish) || !$wish) {
+            $this->addFlash('warning', 'Vous ne pouvez pas accéder à cette page sans être connecté.');
+
+            return $this->redirectToRoute('app_login');
+        }
+
         $manager->remove($wish);
         $manager->flush();
+        $this->addFlash('success', 'La destinatin a été supprimée de votre liste avec succès.');
+
+        return $this->redirectToRoute('app_mylist_index');
+    }
+
+    #[Route('/mylist/status/{id}', name: 'app_mylist_status')]
+    public function status(Wish $wish, EntityManagerInterface $manager): Response
+    {
+
+        if (!$this->getUser() || $this->getUser()->getWishes()->contains($wish) || !$wish) {
+            $this->addFlash('warning', 'Vous ne pouvez pas accéder à cette page sans être connecté.');
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        if($wish->getStatus() === Wish::REVEE) {
+            $wish->setStatus(Wish::VISITEE);
+        } else {
+            $wish->setStatus(Wish::REVEE);
+        }
+        $manager->flush();
+        $this->addFlash('success', 'La destinatin a été changée de status avec succès.');
 
         return $this->redirectToRoute('app_mylist_index');
     }
