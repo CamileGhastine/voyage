@@ -16,9 +16,9 @@ final class AdminController extends AbstractController
     }
 
     #[Route('/admin/destination', name: 'app_admin_destination')]
-    public function destination(DestinationRepository $destinationRepo): Response
+    public function indexDestination(DestinationRepository $destinationRepo): Response
     {
-        return $this->render('admin/destination.html.twig', [
+        return $this->render('admin/destination/index.html.twig', [
             'destinations' => $destinationRepo->findAll()
         ]);
     }
@@ -27,6 +27,6 @@ final class AdminController extends AbstractController
     #[Route('/admin/destination/add', name: 'app_admin_destination_add')]
     public function addDestination(): Response
     {
-        return $this->render('admin/addDestination.html.twig');
+        return $this->render('admin/destination/add.html.twig');
     }
 }
