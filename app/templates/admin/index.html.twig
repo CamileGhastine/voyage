@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+<h1>Espace administrateur</h1>
+<a type="button" class="btn btn-primary" href="{{ path('app_admin_destination') }}">Gérer les destinations</a>
+<a type="button" class="btn btn-info" href="#">Gérer les utilisateurs</a>
+
+{% endblock %}
