@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% set action = (isUpdate ? 'Modifier' : 'Ajouter') %}
+
+{% block title %}{{ action }} une catégorie{% endblock %}
+
+{% block body %}
+    <h1>{{ action }} une catégorie</h1>
+    {{ form_start(formView) }}
+    {{ form_row(formView.name) }}
+    <input type="submit" value="{{ action}}">
+    {{ form_end(formView) }}
+
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Destination;
 use App\Entity\User;
 use App\Form\CategoryType;
@@ -70,10 +71,12 @@ final class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/category/add', name: 'app_admin_category_add')]
-    public function addCategory(Request $request, EntityManagerInterface $manager): Response
+    #[Route('/admin/category/save/{id?null}', name: 'app_admin_category_save')]
+    public function saveCategory(?Category $category, Request $request, EntityManagerInterface $manager): Response
     {
-        $form = $this->createForm(CategoryType::class);
+        $isUpdate = (bool)$category;
+
+        $form = $this->createForm(CategoryType::class, $category);
 
         $form->handleRequest($request);
 
@@ -82,13 +85,14 @@ final class AdminController extends AbstractController
             $manager->persist($category);
             $manager->flush();
 
-            $this->addFlash('success', 'La categorie '. $category->getName() .' a été ajoutée avec succès.');
+            $this->addFlash('success', 'La categorie '. $category->getName() .' a été sauvegardée avec succès.');
 
             return $this->redirectToRoute('app_admin_category_index');
         }
 
-        return $this->render('admin/category/add.html.twig', [
-            'formView' => $form->createView()
+        return $this->render('admin/category/save.html.twig', [
+            'formView' => $form->createView(),
+            'isUpdate' => $isUpdate
         ]);
     }
 }

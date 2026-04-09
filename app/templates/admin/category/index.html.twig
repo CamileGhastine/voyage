@@ -13,7 +13,7 @@
     {% endfor %}
 
     <h1>Liste des catégories</h1>
-    <p class="text-end">Ajouter une categorie <a href="{{ path('app_admin_category_add')}}">➕</a></p>
+    <p class="text-end">Ajouter une categorie <a href="{{ path('app_admin_category_save')}}">➕</a></p>
     <table class="table table-hover">
     <thead>
         <tr>
@@ -26,7 +26,7 @@
         {% for category in categories %}
             <tr class="table-active">
             <td>{{ category.name }}</td>
-            <td>✏️</td>
+            <td><a href="{{ path('app_admin_category_save', { id: category.id }) }}">✏️</a></td>
             <td>❌</td>
             </tr>
         {% endfor %}
