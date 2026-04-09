@@ -54,7 +54,7 @@ final class AdminController extends AbstractController
             $manager->flush();
             $this->addFlash('success', 'La destination a été ajoutée avec succès.');
             
-            return $this->redirectToRoute('app_admin_destination');
+            return $this->redirectToRoute('app_admin_destination_index');
         }
 
         return $this->render('admin/destination/add.html.twig', [
