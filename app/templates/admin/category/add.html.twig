@@ -5,6 +5,9 @@
 
 {% block body %}
     <h1>Ajouter une catégorie</h1>
-
+    {{ form_start(formView) }}
+    {{ form_row(formView.name) }}
+    <input type="submit" value="Ajouter">
+    {{ form_end(formView) }}
 
 {% endblock %}

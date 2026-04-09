@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Destination;
 use App\Entity\User;
+use App\Form\CategoryType;
 use App\Form\DestinationType;
 use App\Repository\CategoryRepository;
 use App\Repository\DestinationRepository;
@@ -70,9 +71,24 @@ final class AdminController extends AbstractController
     }
 
     #[Route('/admin/category/add', name: 'app_admin_category_add')]
-    public function addCategory(): Response
+    public function addCategory(Request $request, EntityManagerInterface $manager): Response
     {
+        $form = $this->createForm(CategoryType::class);
 
-        return $this->render('admin/category/add.html.twig');
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category = $form->getData();
+            $manager->persist($category);
+            $manager->flush();
+
+            $this->addFlash('success', 'La categorie '. $category->getName() .' a été ajoutée avec succès.');
+
+            return $this->redirectToRoute('app_admin_category_index');
+        }
+
+        return $this->render('admin/category/add.html.twig', [
+            'formView' => $form->createView()
+        ]);
     }
 }
