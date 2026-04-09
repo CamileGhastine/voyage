@@ -1,16 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des destinations de voyages{% endblock %}
+{% block title %}Formulaire d'ajout de destination{% endblock %}
+
 
 {% block body %}
-    {% for type, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-dismissible alert-{{ type }}">
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <p class="mb-0">{{ message }}</p>
-            </div>
-        {% endfor %}
-    {% endfor %}
-
     <h1>Ajouter une destination</h1>
+    {{ form_start(formView)}}
+    {{ form_widget(formView)}}
+    <input type="submit" value="Ajouter">
+    {{ form_end(formView)}}
+
 {% endblock %}

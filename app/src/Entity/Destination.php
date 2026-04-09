@@ -24,6 +24,9 @@ class Destination
     #[ORM\Column(length: 2047, nullable: true)]
     private ?string $imageUrl = null;
 
+    #[ORM\ManyToOne(inversedBy: 'destination')]
+    private ?Category $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class Destination
     public function setImageUrl(?string $imageUrl): static
     {
         $this->imageUrl = $imageUrl;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

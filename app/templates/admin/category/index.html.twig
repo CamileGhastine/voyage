@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des categories{% endblock %}
+
+{% block body %}
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-dismissible alert-{{ type }}">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <p class="mb-0">{{ message }}</p>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <h1>Liste des catégories</h1>
+    <p class="text-end">Ajouter une categorie <a href="{{ path('app_admin_category_add')}}">➕</a></p>
+    <table class="table table-hover">
+    <thead>
+        <tr>
+        <th scope="col">Catégorie</th>
+        <th scope="col">Modifier</th>
+        <th scope="col">Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+            <tr class="table-active">
+            <td>{{ category.name }}</td>
+            <td>✏️</td>
+            <td>❌</td>
+            </tr>
+        {% endfor %}
+
+    </tbody>
+    </table>
+{% endblock %}
